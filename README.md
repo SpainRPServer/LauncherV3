@@ -100,7 +100,7 @@ The project uses Git for version management. You can see the currently available
 ### Copyright notice
 
 The project is licensed under the MIT license, see [LICENSE](LICENSE) for details  
-Copyright (c) 2022-2023 Xcube Studio
+Copyright (c) 2022-2023 SpainRP Developers
 
 
 ### Acknowledgements
