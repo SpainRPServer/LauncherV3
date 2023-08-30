@@ -1,7 +1,9 @@
+using CommunityToolkit.WinUI.UI.Media.Pipelines;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Natsurainko.FluentLauncher.Services.Settings;
+using Natsurainko.FluentLauncher.Services.UI;
 using System;
 using System.Linq;
 using Windows.Graphics;
@@ -14,17 +16,16 @@ public sealed partial class ShellPage : Page
     public static Frame ContentFrame { get; private set; }
 
     private readonly SettingsService _settings = App.GetService<SettingsService>();
+    private readonly AppearanceService _appearanceService = App.GetService<AppearanceService>();
 
     public ShellPage()
     {
-        /*
-        this.Resources.Add("NavigationViewContentBackground", new SolidColorBrush(Colors.Transparent));
-        this.Resources.Add("NavigationViewPaneContentGridMargin", new Thickness(-1, 0, -1, 0));
-        this.Resources.Add("NavigationViewContentGridCornerRadius", new CornerRadius(0));
-        */
+        _appearanceService.ApplyBackgroundBeforePageInit(this);
         InitializeComponent();
 
         ContentFrame = contentFrame;
+        _appearanceService.ApplyBackgroundAfterPageInit(this);
+        _appearanceService.RegisterNavigationView(NavigationViewControl);
     }
 
     private void UpdateAppTitleMargin(NavigationView sender)
@@ -43,7 +44,16 @@ public sealed partial class ShellPage : Page
         => UpdateAppTitleMargin(sender);
 
     private void NavigationViewControl_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
-        => contentFrame.Navigate(Type.GetType(((NavigationViewItem)args.InvokedItemContainer).Tag.ToString()));
+    {
+        if (((NavigationViewItem)args.InvokedItemContainer).Tag.ToString()
+            .Equals("Natsurainko.FluentLauncher.Views.Home.HomePage"))
+        {
+            contentFrame.Navigate(App.GetService<AppearanceService>().HomePageType);
+            return;
+        }
+
+        contentFrame.Navigate(Type.GetType(((NavigationViewItem)args.InvokedItemContainer).Tag.ToString()));
+    }
 
     private void NavigationViewControl_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         => contentFrame.GoBack();
@@ -56,12 +66,23 @@ public sealed partial class ShellPage : Page
         RefreshDragArea();
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         _XamlRoot = XamlRoot;
 
         App.MainWindow.SetTitleBar(AppTitleBar);
-        contentFrame.Navigate(typeof(Home.HomePage));
+
+        contentFrame.Navigate(_appearanceService.HomePageType);
+
+        if (_settings.BackgroundMode == 3)
+        {
+            var sprite = await PipelineBuilder
+                .FromBackdrop()
+                .Blur(0, out EffectAnimation<float> blurAnimation)
+                .AttachAsync(BackgroundImageBorder, BackgroundImageBorder);
+
+            await blurAnimation(sprite.Brush, 0, TimeSpan.FromMilliseconds(1));
+        }
 
         RefreshDragArea();
     }
@@ -100,61 +121,13 @@ public sealed partial class ShellPage : Page
         App.MainWindow.AppWindow.TitleBar.SetDragRectangles(new[] { dragRect });
     }
 
-    private void NavigationViewControl_Loaded(object sender, RoutedEventArgs e)
+    internal async void BlurAnimation(int from, int to)
     {
-        /*
-        var PaneContentGrid = FindChildByName(NavigationViewControl, "PaneContentGrid");
+        var sprite = await PipelineBuilder
+            .FromBackdrop()
+            .Blur(from, out EffectAnimation<float> blurAnimation)
+            .AttachAsync(BackgroundImageBorder, BackgroundImageBorder);
 
-        if (PaneContentGrid != null)
-        {
-            var acrylic = new AcrylicBrush
-            {
-                TintOpacity = 0.25,
-                TintLuminosityOpacity = 0.25,
-                FallbackColor = ActualTheme == ElementTheme.Dark ? Colors.Black : Colors.White,
-                TintColor = ActualTheme == ElementTheme.Dark ? Colors.Black : Colors.White
-            };
-
-            PaneContentGrid.SetValue(Grid.BackgroundProperty, acrylic);
-        }*/
+        await blurAnimation(sprite.Brush, to, TimeSpan.FromSeconds(0.1));
     }
-
-    private void Page_ActualThemeChanged(FrameworkElement sender, object args)
-    {
-        /*
-        var PaneContentGrid = FindChildByName(NavigationViewControl, "PaneContentGrid");
-
-        if (PaneContentGrid != null)
-        {
-            var acrylic = new AcrylicBrush
-            {
-                TintOpacity = 0.25,
-                TintLuminosityOpacity = 0.25,
-                FallbackColor = ActualTheme == ElementTheme.Dark ? Colors.Black : Colors.White,
-                TintColor = ActualTheme == ElementTheme.Dark ? Colors.Black : Colors.White
-            };
-
-            PaneContentGrid.SetValue(Grid.BackgroundProperty, acrylic);
-        }*/
-    }
-
-    /*
-    public static DependencyObject FindChildByName(DependencyObject parant, string ControlName)
-    {
-        int count = VisualTreeHelper.GetChildrenCount(parant);
-
-        for (int i = 0; i < count; i++)
-        {
-            var MyChild = VisualTreeHelper.GetChild(parant, i);
-            if (MyChild is FrameworkElement && ((FrameworkElement)MyChild).Name == ControlName)
-                return MyChild;
-
-            var FindResult = FindChildByName(MyChild, ControlName);
-            if (FindResult != null)
-                return FindResult;
-        }
-
-        return null;
-    }*/
-
 }

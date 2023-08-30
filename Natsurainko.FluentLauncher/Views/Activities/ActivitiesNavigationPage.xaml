@@ -17,7 +17,7 @@
             PaneDisplayMode="Top">
             <NavigationView.MenuItems>
                 <NavigationViewItem
-                    x:Uid="Navigation_Activities_Launch"
+                    x:Uid="Activities_ActivitiesNavigationPage_NV_Item1"
                     Content="Launch Task"
                     IsSelected="True"
                     Tag="Natsurainko.FluentLauncher.Views.Activities.LaunchPage">
@@ -26,7 +26,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem
-                    x:Uid="Navigation_Activities_Download"
+                    x:Uid="Activities_ActivitiesNavigationPage_NV_Item2"
                     Content="Download Task"
                     Tag="Natsurainko.FluentLauncher.Views.Activities.DownloadPage">
                     <NavigationViewItem.Icon>
@@ -34,7 +34,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem
-                    x:Uid="Navigation_Activities_News"
+                    x:Uid="Activities_ActivitiesNavigationPage_NV_Item3"
                     Content="News"
                     Tag="Natsurainko.FluentLauncher.Views.Activities.NewsPage">
                     <NavigationViewItem.Icon>
@@ -42,8 +42,9 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem
-                    x:Uid="Navigation_Activities_Application"
+                    x:Uid="Activities_ActivitiesNavigationPage_NV_Item4"
                     Content="Application"
+                    IsEnabled="False"
                     Tag="Natsurainko.FluentLauncher.Views.Activities.ApplicationPage">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xe12a;" />
