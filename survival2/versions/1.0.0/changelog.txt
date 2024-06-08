@@ -10,6 +10,6 @@ Gracias a esto, nos permite añadir contenido facilmente sin tener que empaqueta
 https://spainrp.me
 
 # Actualizaciones 
-- Las actualizaciones acabadas en `1.0.1` son cambios menores y arreglo de errores
-- Las actualizaciones acabadas en `1.1.0` son actualizaciones de contenido pequeñas
-- Las actualizaciones acabadas en `2.0.0` son actualizaciones de contenido grandes
+- Las actualizaciones acabadas en *1.0.1* son cambios menores y arreglo de errores
+- Las actualizaciones acabadas en *1.1.0* son actualizaciones de contenido pequeñas
+- Las actualizaciones acabadas en *2.0.0* son actualizaciones de contenido grandes
