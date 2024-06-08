@@ -1,4 +1,4 @@
-# Bienvenido a la primera version del modpack de la segunda temporada del survival
+# Version 1.0.0
 
 ## Que puedes encontrar aqui
 En esta seccion podras encontrar las actualizaciones y los cambios de cada version
@@ -8,3 +8,8 @@ Gracias a esto, nos permite añadir contenido facilmente sin tener que empaqueta
 
 ## Mas info
 https://spainrp.me
+
+# Actualizaciones 
+- Las actualizaciones acabadas en `1.0.1` son cambios menores y arreglo de errores
+- Las actualizaciones acabadas en `1.1.0` son actualizaciones de contenido pequeñas
+- Las actualizaciones acabadas en `2.0.0` son actualizaciones de contenido grandes
