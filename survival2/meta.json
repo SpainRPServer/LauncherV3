@@ -24,6 +24,18 @@
                     "curseforge": "https://wiki.spainrp.me"
                 }
             }
+        },
+        {
+            "id": "1.1.0",
+            "releasedAt": 1718642191000,
+            "updateType": "minor",
+            "promotions": {
+                "downloads": {
+                    "modrinth": "https://github.com/SpainRPServer/LauncherV3/releases/download/S2V1.1.0/Survival.S2.1.1.0.mrpack",
+                    "generic": "https://spainrp.me",
+                    "curseforge": "https://wiki.spainrp.me"
+                }
+            }
         }
     ]
 }
