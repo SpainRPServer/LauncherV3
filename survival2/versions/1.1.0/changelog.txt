@@ -1,0 +1,5 @@
+# V1.1.0
+- Hemos arreglado algunos bugs
+- Actualizado todos los mods a su ultima version
+- Arreglado el problema de los fps al crear un barco debido a la creacion de particulas
+- Agreado el CarryOn
